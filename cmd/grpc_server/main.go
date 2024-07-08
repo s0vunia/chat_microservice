@@ -24,6 +24,7 @@ type server struct {
 // Create chat
 func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.CreateResponse, error) {
 	log.Printf("Create, usernames: %s", req.GetUsernames())
+	log.Printf("ctx: %+v", ctx)
 
 	return &desc.CreateResponse{
 		Id: int64(gofakeit.Number(1, 100)),
@@ -33,6 +34,7 @@ func (s *server) Create(ctx context.Context, req *desc.CreateRequest) (*desc.Cre
 // Delete chat
 func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*emptypb.Empty, error) {
 	log.Printf("Delete id %d", req.GetId())
+	log.Printf("ctx: %+v", ctx)
 
 	return nil, nil
 }
@@ -40,6 +42,7 @@ func (s *server) Delete(ctx context.Context, req *desc.DeleteRequest) (*emptypb.
 // SendMessage to chat
 func (s *server) SendMessage(ctx context.Context, req *desc.SendMessageRequest) (*emptypb.Empty, error) {
 	log.Printf("Send message %s from %s", req.GetText(), req.GetFrom())
+	log.Printf("ctx: %+v", ctx)
 
 	return nil, nil
 }
