@@ -11,11 +11,12 @@ option go_package = "github.com/s0vunia/chat_microservices_course_boilerplate/pk
 service ChatV1 {
   rpc Create(CreateRequest) returns (CreateResponse);
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
-  rpc SendMessage(SendMessageRequest) returns (google.protobuf.Empty);
+  rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
 }
 
 message CreateRequest {
-  repeated string usernames = 1;
+  string name = 1;
+  repeated int64 user_ids = 2;
 }
 
 message CreateResponse {
@@ -27,7 +28,12 @@ message DeleteRequest {
 }
 
 message SendMessageRequest {
-  string from = 1;
-  string text = 2;
-  google.protobuf.Timestamp timestamp = 3;
+  int64 from_user_id = 1;
+  int64 to_chat_id = 2;
+  string text = 3;
+}
+
+message SendMessageResponse {
+  string id = 1;
+  int64 chat_id = 2;
 }
