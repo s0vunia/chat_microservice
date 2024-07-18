@@ -24,7 +24,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Login to Docker Registry
-        run: docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
+        run: sudo docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
 
       - name: Create env files
         run: |
@@ -44,11 +44,11 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           TAG_NAME=$(echo $GITHUB_SHA | head -c7)
-          docker buildx create --use
-          docker buildx build --no-cache --push --tag $REGISTRY/$AUTH_IMAGE_NAME:$TAG_NAME -f Dockerfile .
+          sudo docker buildx create --use
+          sudo docker buildx build --no-cache --push --tag $REGISTRY/$AUTH_IMAGE_NAME:$TAG_NAME -f Dockerfile .
           
-          docker buildx create --use
-          docker buildx build --no-cache --push --tag $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME -f migration_prod.Dockerfile .
+          sudo docker buildx create --use
+          sudo docker buildx build --no-cache --push --tag $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME -f migration_prod.Dockerfile .
 
   deploy-image:
     runs-on: ubuntu-latest
@@ -98,15 +98,15 @@ jobs:
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
 
             # Login into Selectel Registry
-            docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
+            sudo docker login -u ${{ secrets.REGISTRY_USERNAME }} -p ${{ secrets.REGISTRY_PASSWORD }} $REGISTRY
 
             # Navigate to /tmp/ on the server
             cd /tmp/
             ls
             
             # Pull images from registry
-            docker pull $REGISTRY/$AUTH_IMAGE_NAME:$TAG_NAME
-            docker pull $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME
+            sudo docker pull $REGISTRY/$AUTH_IMAGE_NAME:$TAG_NAME
+            sudo docker pull $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME
 
             # Export environment variables for docker-compose
             export TAG_NAME=$TAG_NAME
@@ -115,7 +115,7 @@ jobs:
             export MIGRATOR_IMAGE_NAME=$MIGRATOR_IMAGE_NAME
             
             # Deploy services defined in docker-compose.yml
-            docker compose up -d chat-prod pg-prod migrator-prod
+            sudo docker compose up -d chat-prod pg-prod migrator-prod
 
             # Optionally, remove the copied docker-compose.yml file
             rm docker-compose.yaml
