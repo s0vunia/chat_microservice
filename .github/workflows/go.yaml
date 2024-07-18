@@ -115,10 +115,10 @@ jobs:
             export MIGRATOR_IMAGE_NAME=$MIGRATOR_IMAGE_NAME
             
             touch .env
-            echo "REGISTRY: $REGISTRY" > .env
-            echo "MIGRATOR_IMAGE_NAME: $MIGRATOR_IMAGE_NAME" > .env
-            echo "CHAT_IMAGE_NAME: $CHAT_IMAGE_NAME" > .env
-            echo "TAG_NAME: $TAG_NAME" > .env
+            echo "REGISTRY: $REGISTRY" >> .env
+            echo "MIGRATOR_IMAGE_NAME: $MIGRATOR_IMAGE_NAME" >> .env
+            echo "CHAT_IMAGE_NAME: $CHAT_IMAGE_NAME> >> .env
+            echo "TAG_NAME: $TAG_NAME" >> .env
             
             # Deploy services defined in docker-compose.yml
             sudo docker compose --env-file .env up -d chat-prod pg-prod migrator-prod
