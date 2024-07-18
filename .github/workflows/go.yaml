@@ -8,7 +8,7 @@ on:
 
 env:
   REGISTRY: "s0vunia.cr.cloud.ru"
-  AUTH_IMAGE_NAME: "chat-prod"
+  CHAT_IMAGE_NAME: "chat-prod"
   MIGRATOR_IMAGE_NAME: "chat-prod"
   CONTAINER_NAME: "chat-server-container"
 
@@ -45,7 +45,7 @@ jobs:
         run: |
           TAG_NAME=$(echo $GITHUB_SHA | head -c7)
           sudo docker buildx create --use
-          sudo docker buildx build --no-cache --push --tag $REGISTRY/$AUTH_IMAGE_NAME:$TAG_NAME -f Dockerfile .
+          sudo docker buildx build --no-cache --push --tag $REGISTRY/$CHAT_IMAGE_NAME:$TAG_NAME -f Dockerfile .
           
           sudo docker buildx create --use
           sudo docker buildx build --no-cache --push --tag $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME -f migration_prod.Dockerfile .
@@ -92,7 +92,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          envs: AUTH_IMAGE_NAME,MIGRATOR_IMAGE_NAME,REGISTRY,GITHUB_SHA,CONTAINER_NAME
+          envs: CHAT_IMAGE_NAME,MIGRATOR_IMAGE_NAME,REGISTRY,GITHUB_SHA,CONTAINER_NAME
           script: |
             # Set up variables
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
@@ -105,14 +105,14 @@ jobs:
             ls
             
             # Pull images from registry
-            sudo docker pull $REGISTRY/$AUTH_IMAGE_NAME:$TAG_NAME
+            sudo docker pull $REGISTRY/$CHAT_IMAGE_NAME:$TAG_NAME
             sudo docker pull $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME
 
             # Export environment variables for docker-compose
-            export TAG_NAME=$TAG_NAME
-            export REGISTRY=$REGISTRY
-            export AUTH_IMAGE_NAME=$AUTH_IMAGE_NAME
-            export MIGRATOR_IMAGE_NAME=$MIGRATOR_IMAGE_NAME
+            sudo export TAG_NAME=$TAG_NAME
+            sudo export REGISTRY=$REGISTRY
+            sudo export CHAT_IMAGE_NAME=$CHAT_IMAGE_NAME
+            sudo export MIGRATOR_IMAGE_NAME=$MIGRATOR_IMAGE_NAME
             
             # Deploy services defined in docker-compose.yml
             sudo docker compose up -d chat-prod pg-prod migrator-prod

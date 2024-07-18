@@ -17,7 +17,7 @@ services:
       - pg-local
 
   chat-prod:
-    image: "${REGISTRY}/${AUTH_IMAGE_NAME}:${TAG_NAME}"
+    image: "${REGISTRY}/${CHAT_IMAGE_NAME}:${TAG_NAME}"
     environment:
       - CONFIG_PATH=prod.env
     ports:
