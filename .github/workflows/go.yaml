@@ -109,16 +109,16 @@ jobs:
             sudo docker pull $REGISTRY/$MIGRATOR_IMAGE_NAME:$TAG_NAME
 
             # Export environment variables for docker-compose
-            export TAG_NAME=$TAG_NAME
-            export REGISTRY=$REGISTRY
-            export CHAT_IMAGE_NAME=$CHAT_IMAGE_NAME
-            export MIGRATOR_IMAGE_NAME=$MIGRATOR_IMAGE_NAME
+            export sudo TAG_NAME=$TAG_NAME
+            export sudo REGISTRY=$REGISTRY
+            export sudo CHAT_IMAGE_NAME=$CHAT_IMAGE_NAME
+            export sudo MIGRATOR_IMAGE_NAME=$MIGRATOR_IMAGE_NAME
             
             # Deploy services defined in docker-compose.yml
             sudo docker compose up -d chat-prod pg-prod migrator-prod
 
             # Optionally, remove the copied docker-compose.yml file
-            rm docker-compose.yaml
+            sudo rm docker-compose.yaml
 
   linter:
     name: lint
