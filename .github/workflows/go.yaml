@@ -9,7 +9,7 @@ on:
 env:
   REGISTRY: "s0vunia.cr.cloud.ru"
   CHAT_IMAGE_NAME: "chat-prod"
-  MIGRATOR_IMAGE_NAME: "chat-prod"
+  MIGRATOR_IMAGE_NAME: "migrator-chat-prod"
   CONTAINER_NAME: "chat-server-container"
 
 jobs:
