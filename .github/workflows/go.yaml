@@ -94,7 +94,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           envs: CHAT_IMAGE_NAME,MIGRATOR_IMAGE_NAME,REGISTRY,GITHUB_SHA,CONTAINER_NAME
           script: |
-            exec bash
+            exec sudo bash
             
             # Set up variables
             TAG_NAME=$(echo $GITHUB_SHA | head -c7)
