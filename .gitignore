@@ -1,2 +1,5 @@
 .idea
 /bin/
+/data/
+local.env
+prod.env
