@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main, master, hw2 ]
+    branches: [ main, master, hw3 ]
   pull_request:
-    branches: [ main, master, hw2 ]
+    branches: [ main, master, hw3 ]
 
 env:
   REGISTRY: "s0vunia.cr.cloud.ru"
