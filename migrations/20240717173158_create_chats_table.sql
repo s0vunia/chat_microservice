@@ -2,9 +2,10 @@
 -- +goose StatementBegin
 CREATE TABLE Chats
 (
-    id       SERIAL PRIMARY KEY,
-    name     VARCHAR(255) NOT NULL,
-    user_ids INT[]
+    id         SERIAL PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP    NOT NULL DEFAULT now(),
+    updated_at TIMESTAMP
 );
 -- +goose StatementEnd
 
