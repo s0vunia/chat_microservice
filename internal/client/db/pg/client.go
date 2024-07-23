@@ -2,6 +2,7 @@ package pg
 
 import (
 	"context"
+
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
 
 	"github.com/jackc/pgx/v4/pgxpool"

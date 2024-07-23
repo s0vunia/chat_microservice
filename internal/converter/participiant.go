@@ -9,9 +9,9 @@ func ToParticipantsCreateFromDesc(userIds []int64) *model.ParticipantsCreate {
 		Participants: make([]model.ParticipantCreate, 0, len(userIds)),
 	}
 
-	for _, userId := range userIds {
+	for _, userID := range userIds {
 		participantsCreate.Participants = append(participantsCreate.Participants, model.ParticipantCreate{
-			UserID: userId,
+			UserID: userID,
 		})
 	}
 

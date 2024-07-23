@@ -2,6 +2,8 @@ package app
 
 import (
 	"context"
+	"log"
+
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/api/chat"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/pg"
@@ -14,7 +16,6 @@ import (
 	participantRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/participant"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/service"
 	chatService "github.com/s0vunia/chat_microservices_course_boilerplate/internal/service/chat"
-	"log"
 )
 
 type serviceProvider struct {

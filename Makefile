@@ -38,3 +38,6 @@ local-migration-up:
 
 local-migration-down:
 	$(LOCAL_BIN)/goose -dir ${LOCAL_MIGRATION_DIR} postgres ${LOCAL_MIGRATION_DSN} down -v
+
+local-docker-compose-up:
+	sudo docker compose up -d --build chat-local pg-local migrator-local
