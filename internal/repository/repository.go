@@ -17,6 +17,7 @@ type MessageRepository interface {
 	Send(context context.Context, createMessage *model.MessageCreate) (string, error)
 }
 
+// ParticipantRepository represents a participant repository.
 type ParticipantRepository interface {
 	CreateParticipant(context context.Context, createParticipant *model.ParticipantCreate) error
 	CreateParticipants(context context.Context, createParticipants *model.ParticipantsCreate) error

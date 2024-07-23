@@ -4,12 +4,13 @@ import (
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
 )
 
-func ToParticipantsCreateFromDesc(userIds []int64) *model.ParticipantsCreate {
+// ToParticipantsCreateFromDesc converts desc.ParticipantsCreate to model.ParticipantsCreate
+func ToParticipantsCreateFromDesc(userIDs []int64) *model.ParticipantsCreate {
 	participantsCreate := &model.ParticipantsCreate{
-		Participants: make([]model.ParticipantCreate, 0, len(userIds)),
+		Participants: make([]model.ParticipantCreate, 0, len(userIDs)),
 	}
 
-	for _, userID := range userIds {
+	for _, userID := range userIDs {
 		participantsCreate.Participants = append(participantsCreate.Participants, model.ParticipantCreate{
 			UserID: userID,
 		})
