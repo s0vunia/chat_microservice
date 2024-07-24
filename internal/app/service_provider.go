@@ -4,6 +4,9 @@ import (
 	"context"
 	"log"
 
+	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice"
+	authService2 "github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice/authservice"
+
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/api/chat"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/pg"
@@ -21,8 +24,10 @@ import (
 type serviceProvider struct {
 	pgConfig   config.PGConfig
 	grpcConfig config.GRPCConfig
+	authConfig config.AuthServiceConfig
 
 	dbClient              db.Client
+	authService           authservice.AuthService
 	txManager             db.TxManager
 	chatRepository        repository.ChatRepository
 	messageRepository     repository.MessageRepository
@@ -63,6 +68,19 @@ func (s *serviceProvider) GRPCConfig() config.GRPCConfig {
 	return s.grpcConfig
 }
 
+func (s *serviceProvider) AuthServiceConfig() config.AuthServiceConfig {
+	if s.authConfig == nil {
+		cfg, err := config.NewAuthServiceConfig()
+		if err != nil {
+			log.Fatalf("failed to get auth service config: %s", err.Error())
+		}
+
+		s.authConfig = cfg
+	}
+
+	return s.authConfig
+}
+
 func (s *serviceProvider) DBClient(ctx context.Context) db.Client {
 	if s.dbClient == nil {
 		cl, err := pg.New(ctx, s.PGConfig().DSN())
@@ -80,6 +98,17 @@ func (s *serviceProvider) DBClient(ctx context.Context) db.Client {
 	}
 
 	return s.dbClient
+}
+
+func (s *serviceProvider) AuthService(_ context.Context) authservice.AuthService {
+	if s.authService == nil {
+		var err error
+		s.authService, err = authService2.NewClient(s.AuthServiceConfig().Address())
+		if err != nil {
+			log.Fatalf("failed to create auth service: %s", err.Error())
+		}
+	}
+	return s.authService
 }
 
 func (s *serviceProvider) TxManager(ctx context.Context) db.TxManager {
@@ -120,6 +149,7 @@ func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 			s.ChatRepository(ctx),
 			s.MessageRepository(ctx),
 			s.ParticipantRepository(ctx),
+			s.AuthService(ctx),
 			s.TxManager(ctx),
 		)
 	}
