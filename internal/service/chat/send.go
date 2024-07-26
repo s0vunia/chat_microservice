@@ -2,6 +2,7 @@ package chat
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/pkg/errors"
 
@@ -9,11 +10,27 @@ import (
 )
 
 func (s *serv) SendMessage(ctx context.Context, createMessage *model.MessageCreate) (string, error) {
-	isExists, err := s.participantRepository.CheckParticipantInChat(ctx, createMessage.Info.ChatID, createMessage.Info.UserID)
-	if !isExists || err != nil {
-		return "", errors.New("user is not a participant of the chat")
-	}
-	id, err := s.messageRepository.Send(ctx, createMessage)
+	var id string
+	err := s.txManager.ReadCommitted(ctx, func(ctx context.Context) error {
+		var errTx error
+		isExists, errTx := s.participantRepository.CheckParticipantInChat(ctx, createMessage.Info.ChatID, createMessage.Info.UserID)
+		if !isExists || errTx != nil {
+			return errors.New("user is not a participant of the chat")
+		}
+		id, errTx = s.messageRepository.Send(ctx, createMessage)
+		if errTx != nil {
+			return errTx
+		}
+
+		_, errTx = s.logsRepository.Create(ctx, &model.LogCreate{
+			Message: fmt.Sprintf("message %s created", id),
+		})
+		if errTx != nil {
+			return errTx
+		}
+
+		return nil
+	})
 	if err != nil {
 		return "", err
 	}

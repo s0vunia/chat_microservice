@@ -23,3 +23,8 @@ type ParticipantRepository interface {
 	CreateParticipants(context context.Context, createParticipants *model.ParticipantsCreate) error
 	CheckParticipantInChat(context context.Context, chatID int64, userID int64) (bool, error)
 }
+
+// LogRepository represents a repository for log entities.
+type LogRepository interface {
+	Create(ctx context.Context, logCreate *model.LogCreate) (int64, error)
+}

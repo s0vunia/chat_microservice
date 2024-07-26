@@ -3,6 +3,7 @@ package chat
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
 )
@@ -33,6 +34,14 @@ func (s *serv) Create(ctx context.Context, createChat *model.ChatCreate, createP
 		}
 
 		errTx = s.participantRepository.CreateParticipants(ctx, createParticipants)
+		if errTx != nil {
+			return errTx
+		}
+
+		_, errTx = s.logsRepository.Create(ctx, &model.LogCreate{
+			Message: fmt.Sprintf("chat %d created", id),
+		})
+
 		if errTx != nil {
 			return errTx
 		}

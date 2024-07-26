@@ -15,6 +15,7 @@ import (
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/config"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository"
 	chatRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/chat"
+	logsRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/log"
 	messageRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/message"
 	participantRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/participant"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/service"
@@ -32,6 +33,7 @@ type serviceProvider struct {
 	chatRepository        repository.ChatRepository
 	messageRepository     repository.MessageRepository
 	participantRepository repository.ParticipantRepository
+	logsRepository        repository.LogRepository
 
 	chatService service.ChatService
 
@@ -143,6 +145,14 @@ func (s *serviceProvider) ParticipantRepository(ctx context.Context) repository.
 	return s.participantRepository
 }
 
+func (s *serviceProvider) LogsRepository(ctx context.Context) repository.LogRepository {
+	if s.logsRepository == nil {
+		s.logsRepository = logsRepository.NewRepository(s.DBClient(ctx))
+	}
+
+	return s.logsRepository
+}
+
 func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 	if s.chatService == nil {
 		s.chatService = chatService.NewService(
@@ -150,6 +160,7 @@ func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 			s.MessageRepository(ctx),
 			s.ParticipantRepository(ctx),
 			s.AuthService(ctx),
+			s.LogsRepository(ctx),
 			s.TxManager(ctx),
 		)
 	}
