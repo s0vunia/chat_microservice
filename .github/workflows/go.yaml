@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main, master, hw3 ]
+    branches: [ main, master, hw4 ]
   pull_request:
-    branches: [ main, master, hw3 ]
+    branches: [ main, master, hw4 ]
 
 env:
   REGISTRY: "chat-service.cr.cloud.ru"
