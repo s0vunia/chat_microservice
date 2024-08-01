@@ -3,8 +3,9 @@ package participant
 import (
 	"context"
 
+	"github.com/s0vunia/platform_common/pkg/db"
+
 	sq "github.com/Masterminds/squirrel"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
 )
 

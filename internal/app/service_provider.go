@@ -4,14 +4,15 @@ import (
 	"context"
 	"log"
 
+	"github.com/s0vunia/platform_common/pkg/closer"
+	"github.com/s0vunia/platform_common/pkg/db"
+	"github.com/s0vunia/platform_common/pkg/db/pg"
+	"github.com/s0vunia/platform_common/pkg/db/transaction"
+
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice"
 	authService2 "github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice/authservice"
 
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/api/chat"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/pg"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/transaction"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/closer"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/config"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository"
 	chatRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/chat"

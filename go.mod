@@ -24,6 +24,7 @@ require (
 	github.com/lann/builder v0.0.0-20180802200727-47ae307949d0 // indirect
 	github.com/lann/ps v0.0.0-20150810152359-62de8c46ede0 // indirect
 	github.com/s0vunia/auth_microservice_proto v0.0.0-20240723165713-640d1b00f281 // indirect
+	github.com/s0vunia/platform_common v1.0.2 // indirect
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/net v0.25.0 // indirect
 	golang.org/x/sys v0.20.0 // indirect
