@@ -1,15 +1,14 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE Chats
+CREATE TABLE logs
 (
     id         SERIAL PRIMARY KEY,
-    name       VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP    NOT NULL DEFAULT now(),
-    updated_at TIMESTAMP
+    message    VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP    NOT NULL DEFAULT now()
 );
 -- +goose StatementEnd
 
 -- +goose Down
 -- +goose StatementBegin
-DROP TABLE Chats;
+DROP TABLE logs;
 -- +goose StatementEnd

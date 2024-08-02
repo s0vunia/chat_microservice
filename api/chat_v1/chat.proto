@@ -14,8 +14,18 @@ service ChatV1 {
   rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
 }
 
-message CreateRequest {
+message ChatCreate {
   string name = 1;
+}
+
+message MessageCreate {
+  int64 from_user_id = 1;
+  int64 to_chat_id = 2;
+  string text = 3;
+}
+
+message CreateRequest {
+  ChatCreate chat = 1;
   repeated int64 user_ids = 2;
 }
 
@@ -28,9 +38,7 @@ message DeleteRequest {
 }
 
 message SendMessageRequest {
-  int64 from_user_id = 1;
-  int64 to_chat_id = 2;
-  string text = 3;
+  MessageCreate message = 1;
 }
 
 message SendMessageResponse {
