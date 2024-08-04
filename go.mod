@@ -1,4 +1,4 @@
-module github.com/s0vunia/chat_microservices_course_boilerplate
+module github.com/s0vunia/chat_microservice
 
 go 1.22
 

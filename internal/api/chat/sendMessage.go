@@ -3,8 +3,8 @@ package chat
 import (
 	"context"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/converter"
-	desc "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1"
+	"github.com/s0vunia/chat_microservice/internal/converter"
+	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 )
 
 // SendMessage sends a new message

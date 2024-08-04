@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
+	"github.com/s0vunia/chat_microservice/internal/model"
 )
 
 func (s *serv) SendMessage(ctx context.Context, createMessage *model.MessageCreate) (string, error) {

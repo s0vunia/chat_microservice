@@ -3,11 +3,11 @@ package tests
 import (
 	"context"
 	"fmt"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/api/chat"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/service"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/service/mocks"
-	desc "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1"
+	"github.com/s0vunia/chat_microservice/internal/api/chat"
+	"github.com/s0vunia/chat_microservice/internal/model"
+	"github.com/s0vunia/chat_microservice/internal/service"
+	"github.com/s0vunia/chat_microservice/internal/service/mocks"
+	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"testing"
 
 	"github.com/brianvoe/gofakeit/v6"

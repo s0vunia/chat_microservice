@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/app"
+	"github.com/s0vunia/chat_microservice/internal/app"
 )
 
 func main() {

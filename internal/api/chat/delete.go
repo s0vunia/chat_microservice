@@ -3,7 +3,7 @@ package chat
 import (
 	"context"
 
-	desc "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1"
+	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
