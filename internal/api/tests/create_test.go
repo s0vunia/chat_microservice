@@ -3,12 +3,13 @@ package tests
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/s0vunia/chat_microservice/internal/api/chat"
 	"github.com/s0vunia/chat_microservice/internal/model"
 	"github.com/s0vunia/chat_microservice/internal/service"
 	"github.com/s0vunia/chat_microservice/internal/service/mocks"
 	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
-	"testing"
 
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/gojuno/minimock/v3"
@@ -60,7 +61,7 @@ func TestImplementation_Create(t *testing.T) {
 			Id: id,
 		}
 	)
-	defer t.Cleanup(mc.Finish)
+
 	tests := []struct {
 		name            string
 		args            args

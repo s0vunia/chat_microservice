@@ -3,6 +3,8 @@ package tests
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/gojuno/minimock/v3"
 	"github.com/s0vunia/chat_microservice/internal/api/chat"
@@ -11,7 +13,6 @@ import (
 	"github.com/s0vunia/chat_microservice/internal/service/mocks"
 	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func TestImplementation_SendMessage(t *testing.T) {
@@ -55,7 +56,7 @@ func TestImplementation_SendMessage(t *testing.T) {
 			ChatId: toChatID,
 		}
 	)
-	defer t.Cleanup(mc.Finish)
+
 	tests := []struct {
 		name            string
 		args            args

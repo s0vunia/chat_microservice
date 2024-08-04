@@ -3,6 +3,8 @@ package tests
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/brianvoe/gofakeit/v6"
 	"github.com/gojuno/minimock/v3"
 	"github.com/s0vunia/chat_microservice/internal/api/chat"
@@ -11,7 +13,6 @@ import (
 	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"testing"
 )
 
 func TestImplementation_Delete(t *testing.T) {
@@ -34,7 +35,7 @@ func TestImplementation_Delete(t *testing.T) {
 
 		serviceErr = fmt.Errorf("service error")
 	)
-	defer t.Cleanup(mc.Finish)
+
 	tests := []struct {
 		name            string
 		args            args
