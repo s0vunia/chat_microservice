@@ -12,6 +12,7 @@ type serv struct {
 	messageRepository     repository.MessageRepository
 	participantRepository repository.ParticipantRepository
 	authServiceClient     authservice.AuthService
+	logsRepository        repository.LogRepository
 	txManager             db.TxManager
 }
 
@@ -21,6 +22,7 @@ func NewService(
 	messageRepository repository.MessageRepository,
 	participantRepository repository.ParticipantRepository,
 	authServiceClient authservice.AuthService,
+	logsRepository repository.LogRepository,
 	txManager db.TxManager,
 ) service.ChatService {
 	return &serv{
@@ -28,6 +30,7 @@ func NewService(
 		messageRepository:     messageRepository,
 		participantRepository: participantRepository,
 		authServiceClient:     authServiceClient,
+		logsRepository:        logsRepository,
 		txManager:             txManager,
 	}
 }

@@ -1,7 +1,7 @@
 package app
 
 import (
-	"context"
+  "context"
 	"log"
 
 	"github.com/s0vunia/platform_common/pkg/closer"
@@ -33,6 +33,7 @@ type serviceProvider struct {
 	chatRepository        repository.ChatRepository
 	messageRepository     repository.MessageRepository
 	participantRepository repository.ParticipantRepository
+	logsRepository        repository.LogRepository
 
 	chatService service.ChatService
 
@@ -144,6 +145,14 @@ func (s *serviceProvider) ParticipantRepository(ctx context.Context) repository.
 	return s.participantRepository
 }
 
+func (s *serviceProvider) LogsRepository(ctx context.Context) repository.LogRepository {
+	if s.logsRepository == nil {
+		s.logsRepository = logsRepository.NewRepository(s.DBClient(ctx))
+	}
+
+	return s.logsRepository
+}
+
 func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 	if s.chatService == nil {
 		s.chatService = chatService.NewService(
@@ -151,6 +160,7 @@ func (s *serviceProvider) ChatService(ctx context.Context) service.ChatService {
 			s.MessageRepository(ctx),
 			s.ParticipantRepository(ctx),
 			s.AuthService(ctx),
+			s.LogsRepository(ctx),
 			s.TxManager(ctx),
 		)
 	}
