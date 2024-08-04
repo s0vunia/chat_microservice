@@ -1,7 +1,7 @@
 package converter
 
 import (
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
+	"github.com/s0vunia/chat_microservice/internal/model"
 )
 
 // ToParticipantsCreateFromDesc converts desc.ParticipantsCreate to model.ParticipantsCreate

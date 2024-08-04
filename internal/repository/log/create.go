@@ -4,8 +4,8 @@ import (
 	"context"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
+	"github.com/s0vunia/chat_microservice/internal/client/db"
+	"github.com/s0vunia/chat_microservice/internal/model"
 )
 
 // Create creates a new log.

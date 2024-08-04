@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/prettier"
+	"github.com/s0vunia/chat_microservice/internal/client/db"
+	"github.com/s0vunia/chat_microservice/internal/client/db/prettier"
 
 	"github.com/georgysavva/scany/pgxscan"
 	"github.com/jackc/pgconn"

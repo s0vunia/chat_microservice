@@ -6,9 +6,9 @@ import (
 	"net"
 	"os"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/closer"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/config"
-	desc "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1"
+	"github.com/s0vunia/chat_microservice/internal/closer"
+	"github.com/s0vunia/chat_microservice/internal/config"
+	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/reflection"

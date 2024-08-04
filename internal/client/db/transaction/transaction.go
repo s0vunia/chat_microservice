@@ -3,9 +3,9 @@ package transaction
 import (
 	"context"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/pg"
+	"github.com/s0vunia/chat_microservice/internal/client/db/pg"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
+	"github.com/s0vunia/chat_microservice/internal/client/db"
 
 	"github.com/jackc/pgx/v4"
 	"github.com/pkg/errors"
