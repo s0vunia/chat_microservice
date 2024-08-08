@@ -4,6 +4,7 @@ go 1.22
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
+	github.com/envoyproxy/protoc-gen-validate v1.0.4
 	github.com/georgysavva/scany v1.2.2
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.21.0
 	github.com/jackc/pgconn v1.14.3

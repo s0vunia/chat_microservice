@@ -33,6 +33,8 @@ generate-chat-api:
 	--plugin=protoc-gen-go-grpc=bin/protoc-gen-go-grpc \
 	--grpc-gateway_out=pkg/chat_v1 --grpc-gateway_opt=paths=source_relative \
 	--plugin=protoc-gen-grpc-gateway=bin/protoc-gen-grpc-gateway \
+	--validate_out lang=go:pkg/chat_v1 --validate_opt=paths=source_relative \
+	--plugin=protoc-gen-validate=bin/protoc-gen-validate \
 	api/chat_v1/chat.proto
 
 local-migration-status:

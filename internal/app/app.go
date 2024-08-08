@@ -12,6 +12,7 @@ import (
 	"github.com/rs/cors"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/closer"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/config"
+	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/interceptor"
 	desc "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -111,7 +112,9 @@ func (a *App) initServiceProvider(_ context.Context) error {
 }
 
 func (a *App) initGRPCServer(ctx context.Context) error {
-	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()))
+	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()),
+		grpc.UnaryInterceptor(interceptor.ValidateInterceptor),
+	)
 
 	reflection.Register(a.grpcServer)
 

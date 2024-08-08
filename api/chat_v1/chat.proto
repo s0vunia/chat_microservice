@@ -6,6 +6,7 @@ import "google/protobuf/timestamp.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "google/api/annotations.proto";
+import "validate/validate.proto";
 
 option go_package = "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1;chat_v1";
 
@@ -30,13 +31,13 @@ service ChatV1 {
 }
 
 message ChatCreate {
-  string name = 1;
+  string name = 1 [(validate.rules).string = {min_len: 1, max_len: 50}];
 }
 
 message MessageCreate {
   int64 from_user_id = 1;
   int64 to_chat_id = 2;
-  string text = 3;
+  string text = 3 [(validate.rules).string = {min_len: 1, max_len: 500}];
 }
 
 message CreateRequest {
