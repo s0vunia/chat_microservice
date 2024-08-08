@@ -22,7 +22,9 @@ get-deps:
 	go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
 
 generate:
+	mkdir -p pkg/swagger
 	make generate-chat-api
+	$(LOCAL_BIN)/statik -src=pkg/swagger/ -include='*.css,*.html,*.js,*.json,*.png'
 
 generate-chat-api:
 	mkdir -p pkg/chat_v1
@@ -35,6 +37,8 @@ generate-chat-api:
 	--plugin=protoc-gen-grpc-gateway=bin/protoc-gen-grpc-gateway \
 	--validate_out lang=go:pkg/chat_v1 --validate_opt=paths=source_relative \
 	--plugin=protoc-gen-validate=bin/protoc-gen-validate \
+	--openapiv2_out=allow_merge=true,merge_file_name=api:pkg/swagger \
+	--plugin=protoc-gen-openapiv2=bin/protoc-gen-openapiv2 \
 	api/chat_v1/chat.proto
 
 local-migration-status:
