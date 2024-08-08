@@ -15,7 +15,7 @@ env:
 jobs:
   image-build-and-push:
     runs-on: ubuntu-latest
-    needs: linter
+    needs: test
 
     steps:
       - name: Checkout master
@@ -40,6 +40,11 @@ jobs:
           echo MIGRATION_DIR=${{ secrets.MIGRATION_DIR }} >> prod.env
           echo GRPC_PORT=${{ secrets.GRPC_PORT }} >> prod.env
           echo GRPC_HOST=${{ secrets.GRPC_HOST }} >> prod.env
+          echo HTTP_HOST=${{ secrets.HTTP_HOST }} >> prod.env
+          echo HTTP_PORT=${{ secrets.HTTP_PORT }} >> prod.env
+          echo READ_HEADER_TIMEOUT_SEC=${{ secrets.READ_HEADER_TIMEOUT_SEC }} >> prod.env
+          echo SWAGGER_HOST=${{ secrets.SWAGGER_HOST }} >> prod.env
+          echo SWAGGER_PORT=${{ secrets.SWAGGER_PORT }} >> prod.env
           echo AUTH_HOST=${{ secrets.AUTH_HOST }} >> prod.env
           echo AUTH_PORT=${{ secrets.AUTH_PORT }} >> prod.env
           cat prod.env
@@ -77,6 +82,11 @@ jobs:
           echo MIGRATION_DIR=${{ secrets.MIGRATION_DIR }} >> prod.env
           echo GRPC_PORT=${{ secrets.GRPC_PORT }} >> prod.env
           echo GRPC_HOST=${{ secrets.GRPC_HOST }} >> prod.env
+          echo HTTP_HOST=${{ secrets.HTTP_HOST }} >> prod.env
+          echo HTTP_PORT=${{ secrets.HTTP_PORT }} >> prod.env
+          echo READ_HEADER_TIMEOUT_SEC=${{ secrets.READ_HEADER_TIMEOUT_SEC }} >> prod.env
+          echo SWAGGER_HOST=${{ secrets.SWAGGER_HOST }} >> prod.env
+          echo SWAGGER_PORT=${{ secrets.SWAGGER_PORT }} >> prod.env
           echo AUTH_HOST=${{ secrets.AUTH_HOST }} >> prod.env
           echo AUTH_PORT=${{ secrets.AUTH_PORT }} >> prod.env
           cat prod.env
@@ -172,3 +182,15 @@ jobs:
 
           # Optional: The mode to install golangci-lint. It can be 'binary' or 'goinstall'.
           # install-mode: "goinstall"
+
+  test:
+    needs: linter
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '1.22'
+          cache: false
+      - name: Run tests
+        run: go test ./...
