@@ -13,6 +13,7 @@ services:
       dockerfile: Dockerfile
     ports:
         - "50053:50053"
+        - "8080:8080"
     depends_on:
       - pg-local
 
