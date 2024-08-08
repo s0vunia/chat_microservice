@@ -7,6 +7,9 @@ import (
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice"
 	authService2 "github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice/authservice"
 
+	// nolint
+	_ "github.com/s0vunia/chat_microservices_course_boilerplate/statik"
+
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/api/chat"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
 	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/pg"

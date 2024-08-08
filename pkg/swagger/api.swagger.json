@@ -1,13 +1,22 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "chat.proto",
-    "version": "version not set"
+    "title": "Chat API",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Dmitriy Burin",
+      "email": "hahahihi@mail.com"
+    }
   },
   "tags": [
     {
       "name": "ChatV1"
     }
+  ],
+  "host": "localhost:8080",
+  "schemes": [
+    "http",
+    "https"
   ],
   "consumes": [
     "application/json"
@@ -18,6 +27,7 @@
   "paths": {
     "/chat/v1": {
       "delete": {
+        "summary": "Удаляет чат",
         "operationId": "ChatV1_Delete",
         "responses": {
           "200": {
@@ -50,6 +60,7 @@
     },
     "/chat/v1/create": {
       "post": {
+        "summary": "Создает новый чат",
         "operationId": "ChatV1_Create",
         "responses": {
           "200": {
@@ -82,6 +93,7 @@
     },
     "/chat/v1/send-message": {
       "post": {
+        "summary": "Отправляет сообщение",
         "operationId": "ChatV1_SendMessage",
         "responses": {
           "200": {

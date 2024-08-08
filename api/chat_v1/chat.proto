@@ -7,21 +7,42 @@ import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "google/api/annotations.proto";
 import "validate/validate.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/s0vunia/chat_microservices_course_boilerplate/pkg/chat_v1;chat_v1";
 
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
+  info: {
+    title: "Chat API"
+    version: "1.0.0"
+    contact: {
+      name: "Dmitriy Burin"
+      email: "hahahihi@mail.com"
+    };
+  };
+
+  host: "localhost:8080",
+  schemes: HTTP,
+  schemes: HTTPS,
+  consumes: "application/json",
+  produces: "application/json",
+};
+
 service ChatV1 {
+  // Создает новый чат
   rpc Create(CreateRequest) returns (CreateResponse) {
     option (google.api.http) = {
       post: "/chat/v1/create"
       body: "*"
     };
   };
+  // Удаляет чат
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       delete: "/chat/v1"
     };
   };
+  // Отправляет сообщение
   rpc SendMessage(SendMessageRequest) returns (SendMessageResponse) {
     option (google.api.http) = {
       post: "/chat/v1/send-message"
