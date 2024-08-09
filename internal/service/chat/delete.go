@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/model"
+	"github.com/s0vunia/chat_microservice/internal/model"
 )
 
 func (s *serv) Delete(ctx context.Context, id int64) error {
