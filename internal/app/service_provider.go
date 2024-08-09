@@ -4,25 +4,25 @@ import (
 	"context"
 	"log"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice"
-	authService2 "github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice/authservice"
+	"github.com/s0vunia/chat_microservice/internal/client/authservice"
+	authService2 "github.com/s0vunia/chat_microservice/internal/client/authservice/authservice"
 
 	// nolint
-	_ "github.com/s0vunia/chat_microservices_course_boilerplate/statik"
+	_ "github.com/s0vunia/chat_microservice/statik"
 
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/api/chat"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/pg"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db/transaction"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/closer"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/config"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository"
-	chatRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/chat"
-	logsRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/log"
-	messageRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/message"
-	participantRepository "github.com/s0vunia/chat_microservices_course_boilerplate/internal/repository/participant"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/service"
-	chatService "github.com/s0vunia/chat_microservices_course_boilerplate/internal/service/chat"
+	"github.com/s0vunia/chat_microservice/internal/api/chat"
+	"github.com/s0vunia/chat_microservice/internal/client/db"
+	"github.com/s0vunia/chat_microservice/internal/client/db/pg"
+	"github.com/s0vunia/chat_microservice/internal/client/db/transaction"
+	"github.com/s0vunia/chat_microservice/internal/closer"
+	"github.com/s0vunia/chat_microservice/internal/config"
+	"github.com/s0vunia/chat_microservice/internal/repository"
+	chatRepository "github.com/s0vunia/chat_microservice/internal/repository/chat"
+	logsRepository "github.com/s0vunia/chat_microservice/internal/repository/log"
+	messageRepository "github.com/s0vunia/chat_microservice/internal/repository/message"
+	participantRepository "github.com/s0vunia/chat_microservice/internal/repository/participant"
+	"github.com/s0vunia/chat_microservice/internal/service"
+	chatService "github.com/s0vunia/chat_microservice/internal/service/chat"
 )
 
 type serviceProvider struct {

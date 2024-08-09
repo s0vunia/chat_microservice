@@ -1,7 +1,7 @@
 package authservice
 
 import (
-	authservice "github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/authservice"
+	"github.com/s0vunia/chat_microservice/internal/client/authservice"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )

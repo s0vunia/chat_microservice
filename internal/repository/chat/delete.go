@@ -4,7 +4,7 @@ import (
 	"context"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/s0vunia/chat_microservices_course_boilerplate/internal/client/db"
+	"github.com/s0vunia/chat_microservice/internal/client/db"
 )
 
 func (r *repo) Delete(ctx context.Context, id int64) error {
