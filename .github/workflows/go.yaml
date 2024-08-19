@@ -128,9 +128,6 @@ jobs:
             # Deploy services defined in docker-compose.yml
             sudo docker compose --env-file .env up -d chat-prod pg-prod migrator-prod
 
-            # Optionally, remove the copied docker-compose.yml file
-            sudo rm docker-compose.yaml
-
   linter:
     name: lint
     runs-on: ubuntu-latest
