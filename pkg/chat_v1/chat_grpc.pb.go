@@ -25,6 +25,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ChatV1Client interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ConnectChat(ctx context.Context, in *ConnectChatRequest, opts ...grpc.CallOption) (ChatV1_ConnectChatClient, error)
 	SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error)
 }
 
@@ -54,6 +55,38 @@ func (c *chatV1Client) Delete(ctx context.Context, in *DeleteRequest, opts ...gr
 	return out, nil
 }
 
+func (c *chatV1Client) ConnectChat(ctx context.Context, in *ConnectChatRequest, opts ...grpc.CallOption) (ChatV1_ConnectChatClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ChatV1_ServiceDesc.Streams[0], "/chat_v1.ChatV1/ConnectChat", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &chatV1ConnectChatClient{stream}
+	if err := x.ClientStream.SendMsg(in); err != nil {
+		return nil, err
+	}
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	return x, nil
+}
+
+type ChatV1_ConnectChatClient interface {
+	Recv() (*MessageCreate, error)
+	grpc.ClientStream
+}
+
+type chatV1ConnectChatClient struct {
+	grpc.ClientStream
+}
+
+func (x *chatV1ConnectChatClient) Recv() (*MessageCreate, error) {
+	m := new(MessageCreate)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *chatV1Client) SendMessage(ctx context.Context, in *SendMessageRequest, opts ...grpc.CallOption) (*SendMessageResponse, error) {
 	out := new(SendMessageResponse)
 	err := c.cc.Invoke(ctx, "/chat_v1.ChatV1/SendMessage", in, out, opts...)
@@ -69,6 +102,7 @@ func (c *chatV1Client) SendMessage(ctx context.Context, in *SendMessageRequest, 
 type ChatV1Server interface {
 	Create(context.Context, *CreateRequest) (*CreateResponse, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
+	ConnectChat(*ConnectChatRequest, ChatV1_ConnectChatServer) error
 	SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error)
 	mustEmbedUnimplementedChatV1Server()
 }
@@ -82,6 +116,9 @@ func (UnimplementedChatV1Server) Create(context.Context, *CreateRequest) (*Creat
 }
 func (UnimplementedChatV1Server) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedChatV1Server) ConnectChat(*ConnectChatRequest, ChatV1_ConnectChatServer) error {
+	return status.Errorf(codes.Unimplemented, "method ConnectChat not implemented")
 }
 func (UnimplementedChatV1Server) SendMessage(context.Context, *SendMessageRequest) (*SendMessageResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SendMessage not implemented")
@@ -135,6 +172,27 @@ func _ChatV1_Delete_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ChatV1_ConnectChat_Handler(srv interface{}, stream grpc.ServerStream) error {
+	m := new(ConnectChatRequest)
+	if err := stream.RecvMsg(m); err != nil {
+		return err
+	}
+	return srv.(ChatV1Server).ConnectChat(m, &chatV1ConnectChatServer{stream})
+}
+
+type ChatV1_ConnectChatServer interface {
+	Send(*MessageCreate) error
+	grpc.ServerStream
+}
+
+type chatV1ConnectChatServer struct {
+	grpc.ServerStream
+}
+
+func (x *chatV1ConnectChatServer) Send(m *MessageCreate) error {
+	return x.ServerStream.SendMsg(m)
+}
+
 func _ChatV1_SendMessage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SendMessageRequest)
 	if err := dec(in); err != nil {
@@ -173,6 +231,12 @@ var ChatV1_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ChatV1_SendMessage_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "ConnectChat",
+			Handler:       _ChatV1_ConnectChat_Handler,
+			ServerStreams: true,
+		},
+	},
 	Metadata: "chat.proto",
 }

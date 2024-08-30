@@ -11,6 +11,7 @@ option go_package = "github.com/s0vunia/chat_microservices_course_boilerplate/pk
 service ChatV1 {
   rpc Create(CreateRequest) returns (CreateResponse);
   rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+  rpc ConnectChat (ConnectChatRequest) returns (stream MessageCreate);
   rpc SendMessage(SendMessageRequest) returns (SendMessageResponse);
 }
 
@@ -22,6 +23,7 @@ message MessageCreate {
   int64 from_user_id = 1;
   int64 to_chat_id = 2;
   string text = 3;
+  google.protobuf.Timestamp created_at = 4;
 }
 
 message CreateRequest {
@@ -31,6 +33,11 @@ message CreateRequest {
 
 message CreateResponse {
   int64 id = 1;
+}
+
+message ConnectChatRequest {
+  int64 chat_id = 1;
+  int64 user_id = 2;
 }
 
 message DeleteRequest {

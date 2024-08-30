@@ -10,6 +10,7 @@ import (
 type ChatRepository interface {
 	Create(context context.Context, createChat *model.ChatCreate) (int64, error)
 	Delete(context context.Context, id int64) error
+	Get(context context.Context, id int64) (*model.Chat, error)
 }
 
 // MessageRepository represents a message repository.

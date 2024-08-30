@@ -17,6 +17,15 @@ func (s *serv) SendMessage(ctx context.Context, createMessage *model.MessageCrea
 		if !isExists || errTx != nil {
 			return errors.New("user is not a participant of the chat")
 		}
+
+		s.mxChannel.RLock()
+		chatChan, ok := s.channels[createMessage.Info.ChatID]
+		if !ok {
+			return errors.New("connection not found")
+		}
+		chatChan <- createMessage
+		s.mxChannel.RUnlock()
+
 		id, errTx = s.messageRepository.Send(ctx, createMessage)
 		if errTx != nil {
 			return errTx

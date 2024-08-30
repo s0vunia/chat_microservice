@@ -15,3 +15,11 @@ func ToMessageCreateFromDesc(messageCreate *desc.MessageCreate) *model.MessageCr
 		},
 	}
 }
+
+func ToMessageCreateFromModel(messageCreate *model.MessageCreate) *desc.MessageCreate {
+	return &desc.MessageCreate{
+		ToChatId:   messageCreate.Info.ChatID,
+		FromUserId: messageCreate.Info.UserID,
+		Text:       messageCreate.Info.Text,
+	}
+}

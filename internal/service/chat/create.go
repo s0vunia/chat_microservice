@@ -33,6 +33,10 @@ func (s *serv) Create(ctx context.Context, createChat *model.ChatCreate, createP
 			createParticipants.Participants[i].ChatID = id
 		}
 
+		s.mxChannel.Lock()
+		s.channels[id] = make(chan *model.MessageCreate, 100)
+		s.mxChannel.Unlock()
+
 		errTx = s.participantRepository.CreateParticipants(ctx, createParticipants)
 		if errTx != nil {
 			return errTx
