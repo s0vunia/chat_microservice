@@ -2,10 +2,11 @@ package app
 
 import (
 	"context"
-	"log"
 
 	"github.com/s0vunia/chat_microservice/internal/client/authservice"
 	authService2 "github.com/s0vunia/chat_microservice/internal/client/authservice/authservice"
+	"github.com/s0vunia/chat_microservice/internal/logger"
+	"go.uber.org/zap"
 
 	"github.com/s0vunia/chat_microservice/internal/api/chat"
 	"github.com/s0vunia/chat_microservice/internal/client/db"
@@ -23,9 +24,10 @@ import (
 )
 
 type serviceProvider struct {
-	pgConfig   config.PGConfig
-	grpcConfig config.GRPCConfig
-	authConfig config.AuthServiceConfig
+	pgConfig     config.PGConfig
+	grpcConfig   config.GRPCConfig
+	authConfig   config.AuthServiceConfig
+	loggerConfig config.LoggerConfig
 
 	dbClient              db.Client
 	authService           authservice.AuthService
@@ -48,7 +50,10 @@ func (s *serviceProvider) PGConfig() config.PGConfig {
 	if s.pgConfig == nil {
 		cfg, err := config.NewPGConfig()
 		if err != nil {
-			log.Fatalf("failed to get pg config: %s", err.Error())
+			logger.Fatal(
+				"failed to get pg config",
+				zap.Error(err),
+			)
 		}
 
 		s.pgConfig = cfg
@@ -61,7 +66,10 @@ func (s *serviceProvider) GRPCConfig() config.GRPCConfig {
 	if s.grpcConfig == nil {
 		cfg, err := config.NewGRPCConfig()
 		if err != nil {
-			log.Fatalf("failed to get grpc config: %s", err.Error())
+			logger.Fatal(
+				"failed to get grpc config",
+				zap.Error(err),
+			)
 		}
 
 		s.grpcConfig = cfg
@@ -74,7 +82,10 @@ func (s *serviceProvider) AuthServiceConfig() config.AuthServiceConfig {
 	if s.authConfig == nil {
 		cfg, err := config.NewAuthServiceConfig()
 		if err != nil {
-			log.Fatalf("failed to get auth service config: %s", err.Error())
+			logger.Fatal(
+				"failed to get auth service config",
+				zap.Error(err),
+			)
 		}
 
 		s.authConfig = cfg
@@ -83,16 +94,36 @@ func (s *serviceProvider) AuthServiceConfig() config.AuthServiceConfig {
 	return s.authConfig
 }
 
+func (s *serviceProvider) LoggerConfig() config.LoggerConfig {
+	if s.loggerConfig == nil {
+		cfg, err := config.NewLoggerConfig()
+		if err != nil {
+			logger.Fatal(
+				"failed to get logger config",
+				zap.Error(err),
+			)
+		}
+		s.loggerConfig = cfg
+	}
+	return s.loggerConfig
+}
+
 func (s *serviceProvider) DBClient(ctx context.Context) db.Client {
 	if s.dbClient == nil {
 		cl, err := pg.New(ctx, s.PGConfig().DSN())
 		if err != nil {
-			log.Fatalf("failed to create db client: %v", err)
+			logger.Fatal(
+				"failed to get db client",
+				zap.Error(err),
+			)
 		}
 
 		err = cl.DB().Ping(ctx)
 		if err != nil {
-			log.Fatalf("ping error: %s", err.Error())
+			logger.Fatal(
+				"failed to ping db",
+				zap.Error(err),
+			)
 		}
 		closer.Add(cl.Close)
 
@@ -107,7 +138,10 @@ func (s *serviceProvider) AuthService(_ context.Context) authservice.AuthService
 		var err error
 		s.authService, err = authService2.NewClient(s.AuthServiceConfig().Address())
 		if err != nil {
-			log.Fatalf("failed to create auth service: %s", err.Error())
+			logger.Fatal(
+				"failed to create auth service",
+				zap.Error(err),
+			)
 		}
 	}
 	return s.authService

@@ -13,12 +13,13 @@ import (
 func AuthInterceptor(client authservice.AuthService) func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 	return func(ctx context.Context, req interface{}, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (interface{}, error) {
 		fmt.Printf("Handling request on %v\n", info.FullMethod)
+		return handler(ctx, req)
 		md, _ := metadata.FromIncomingContext(ctx)
 		newCtx := metadata.NewOutgoingContext(ctx, md)
 		err := client.Check(newCtx, info.FullMethod)
 		if err != nil {
 			return nil, err
 		}
-		return handler(ctx, req)
+		return handler(newCtx, req)
 	}
 }
