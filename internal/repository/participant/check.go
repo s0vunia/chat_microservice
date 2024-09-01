@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/s0vunia/chat_microservice/internal/client/db"
+	"github.com/s0vunia/platform_common/pkg/db"
 )
 
 func (r *repo) CheckParticipantInChat(ctx context.Context, chatID int64, userID int64) (bool, error) {

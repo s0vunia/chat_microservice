@@ -4,8 +4,8 @@ import (
 	"context"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/s0vunia/chat_microservice/internal/client/db"
 	"github.com/s0vunia/chat_microservice/internal/model"
+	"github.com/s0vunia/platform_common/pkg/db"
 )
 
 func (r *repo) Send(ctx context.Context, createMessage *model.MessageCreate) (string, error) {

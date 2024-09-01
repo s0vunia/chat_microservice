@@ -4,11 +4,11 @@ import (
 	"sync"
 
 	"github.com/s0vunia/chat_microservice/internal/client/authservice"
-	"github.com/s0vunia/chat_microservice/internal/client/db"
 	"github.com/s0vunia/chat_microservice/internal/model"
 	"github.com/s0vunia/chat_microservice/internal/repository"
 	"github.com/s0vunia/chat_microservice/internal/service"
 	"github.com/s0vunia/chat_microservice/internal/service/stream"
+	"github.com/s0vunia/platform_common/pkg/db"
 )
 
 type Chat struct {

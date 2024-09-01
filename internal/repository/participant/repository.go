@@ -1,8 +1,8 @@
 package participant
 
 import (
-	"github.com/s0vunia/chat_microservice/internal/client/db"
 	"github.com/s0vunia/chat_microservice/internal/repository"
+	"github.com/s0vunia/platform_common/pkg/db"
 )
 
 const (
