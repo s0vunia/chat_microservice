@@ -8,6 +8,7 @@ import (
 
 	"github.com/s0vunia/chat_microservice/internal/closer"
 	"github.com/s0vunia/chat_microservice/internal/config"
+	"github.com/s0vunia/chat_microservice/internal/interceptor"
 	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -82,7 +83,8 @@ func (a *App) initServiceProvider(_ context.Context) error {
 }
 
 func (a *App) initGRPCServer(ctx context.Context) error {
-	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()))
+	a.grpcServer = grpc.NewServer(grpc.Creds(insecure.NewCredentials()),
+		grpc.UnaryInterceptor(interceptor.AuthInterceptor(a.serviceProvider.AuthService(ctx))))
 
 	reflection.Register(a.grpcServer)
 

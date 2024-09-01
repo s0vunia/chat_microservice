@@ -2,9 +2,9 @@ name: Go
 
 on:
   push:
-    branches: [ main, master, hw3 ]
+    branches: [ main, master, features/* ]
   pull_request:
-    branches: [ main, master, hw3 ]
+    branches: [ main, master, features/* ]
 
 env:
   REGISTRY: "chat-service.cr.cloud.ru"
@@ -127,9 +127,6 @@ jobs:
             
             # Deploy services defined in docker-compose.yml
             sudo docker compose --env-file .env up -d chat-prod pg-prod migrator-prod
-
-            # Optionally, remove the copied docker-compose.yml file
-            sudo rm docker-compose.yaml
 
   linter:
     name: lint
