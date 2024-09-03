@@ -25,10 +25,11 @@ import (
 )
 
 type serviceProvider struct {
-	pgConfig     config.PGConfig
-	grpcConfig   config.GRPCConfig
-	authConfig   config.AuthServiceConfig
-	loggerConfig config.LoggerConfig
+	pgConfig         config.PGConfig
+	grpcConfig       config.GRPCConfig
+	authConfig       config.AuthServiceConfig
+	prometheusConfig config.PrometheusConfig
+	loggerConfig     config.LoggerConfig
 
 	dbClient              db.Client
 	authService           authservice.AuthService
@@ -107,6 +108,22 @@ func (s *serviceProvider) LoggerConfig() config.LoggerConfig {
 		s.loggerConfig = cfg
 	}
 	return s.loggerConfig
+}
+
+func (s *serviceProvider) PrometheusConfig() config.PrometheusConfig {
+	if s.prometheusConfig == nil {
+		cfg, err := config.NewPrometheusConfig()
+		if err != nil {
+			logger.Fatal(
+				"failed to get prometheus config",
+				zap.Error(err),
+			)
+		}
+
+		s.prometheusConfig = cfg
+	}
+
+	return s.prometheusConfig
 }
 
 func (s *serviceProvider) DBClient(ctx context.Context) db.Client {

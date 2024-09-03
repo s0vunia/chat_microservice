@@ -3,6 +3,7 @@ version: '3'
 volumes:
   postgres_volume_local:
   postgres_volume_prod:
+  grafana_data:
 
 services:
   chat-local:
@@ -13,6 +14,7 @@ services:
       dockerfile: Dockerfile
     ports:
         - "50053:50053"
+        - "2112:2112"
     volumes:
       - ./logs:/app/logs
     depends_on:
@@ -65,3 +67,18 @@ services:
       DB_HOST: pg-prod
     depends_on:
       - pg-prod
+
+  prometheus:
+    image: prom/prometheus:v2.37.9
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+      - ./alerts.yaml:/etc/prometheus/alerts.yml
+
+  grafana:
+    image: grafana/grafana-oss:10.0.3
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
