@@ -16,6 +16,7 @@ func ToMessageCreateFromDesc(messageCreate *desc.MessageCreate) *model.MessageCr
 	}
 }
 
+// ToMessageCreateFromModel converts model.MessageCreate to desc.MessageCreate
 func ToMessageCreateFromModel(messageCreate *model.MessageCreate) *desc.MessageCreate {
 	return &desc.MessageCreate{
 		ToChatId:   messageCreate.Info.ChatID,

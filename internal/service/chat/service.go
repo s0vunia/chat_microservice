@@ -11,6 +11,7 @@ import (
 	"github.com/s0vunia/platform_common/pkg/db"
 )
 
+// Chat represents a chat.
 type Chat struct {
 	streams map[int64]stream.Stream
 	m       sync.RWMutex

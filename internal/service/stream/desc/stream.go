@@ -11,20 +11,24 @@ import (
 
 var _ stream.Stream = (*StreamDesc)(nil)
 
+// StreamDesc implements stream.Stream
 type StreamDesc struct {
 	stream desc.ChatV1_ConnectChatServer
 }
 
+// NewStream returns new stream
 func NewStream(stream desc.ChatV1_ConnectChatServer) *StreamDesc {
 	return &StreamDesc{
 		stream: stream,
 	}
 }
 
+// Send sends message
 func (s *StreamDesc) Send(msg *model.MessageCreate) error {
 	return s.stream.Send(converter.ToMessageCreateFromModel(msg))
 }
 
+// Context returns context
 func (s *StreamDesc) Context() context.Context {
 	return s.stream.Context()
 }
