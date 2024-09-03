@@ -14,6 +14,7 @@ import (
 	"github.com/s0vunia/chat_microservice/internal/interceptor"
 	"github.com/s0vunia/chat_microservice/internal/logger"
 	"github.com/s0vunia/chat_microservice/internal/metric"
+	"github.com/s0vunia/chat_microservice/internal/tracing"
 	desc "github.com/s0vunia/chat_microservice/pkg/chat_v1"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -24,7 +25,8 @@ import (
 )
 
 var (
-	configPath string
+	configPath  string
+	serviceName = "chat-service"
 )
 
 func init() {
@@ -95,6 +97,7 @@ func (a *App) initDeps(ctx context.Context) error {
 		a.initServiceProvider,
 		a.initLogger,
 		a.initMetric,
+		a.initTracing,
 		a.initGRPCServer,
 		a.initPrometheusServer,
 	}
@@ -145,6 +148,7 @@ func (a *App) initGRPCServer(ctx context.Context) error {
 		grpc.UnaryInterceptor(
 			grpcMiddleware.ChainUnaryServer(
 				interceptor.MetricsInterceptor,
+				interceptor.ServerTracingInterceptor,
 				interceptor.LogInterceptor,
 				interceptor.AuthInterceptor(a.serviceProvider.AuthService(ctx)),
 			),
@@ -164,6 +168,11 @@ func (a *App) initMetric(ctx context.Context) error {
 		return err
 	}
 
+	return nil
+}
+
+func (a *App) initTracing(_ context.Context) error {
+	tracing.Init(logger.Logger(), serviceName)
 	return nil
 }
 
